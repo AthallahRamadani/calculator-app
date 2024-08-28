@@ -1,56 +1,69 @@
 import React, { useState } from 'react';
-import './Calculator.css'; // Tambahkan ini untuk memisahkan CSS (opsional)
+import { CALC_BUTTON_LIST, CALC_OPERATOR_LIST } from './constants/calculator.constant';
+import './Calculator.css';
 
-const Calculator = () => {
-  const [input, setInput] = useState('');
+function Calculator() {
 
-  const handleClick = (value) => {
-    setInput(input + value);
-  };
+  const [dispalyInput, setDisplayInput] = useState("");
 
-  const calculate = () => {
-    try {
-      setInput(eval(input));
-    } catch {
-      setInput('Error');
+  const handleButtonClick = (value) => {
+    if (value === "AC") {
+      setDisplayInput("");
+    } else if (value === "DEL") {
+      setDisplayInput((prev) => prev.slice(0, -1));
+    } else if (value === "=") {
+      try {
+        const formattedDisplayInput = dispalyInput.replace(/\^/g, "**");
+        const result = eval(formattedDisplayInput);
+        setDisplayInput(result.toString());
+      } catch (error) {
+        setDisplayInput("Error");
+      }
+    } else {
+      setDisplayInput((prev) => {
+        const lastChar = prev.slice(-1);
+        const isLastCharOperator = CALC_OPERATOR_LIST.includes(lastChar);
+        const isCurrentCharOperator = CALC_OPERATOR_LIST.includes(value);
+
+        if (isLastCharOperator && isCurrentCharOperator) {
+          return prev;
+        } else if (prev.slice(-1) === "-" && value === "-") {
+          return prev + "(-";
+        } else {
+          return prev + value;
+        }
+      });
     }
   };
 
-  const clearInput = () => {
-    setInput('');
-  };
-
   return (
-    <div className="calculator">
-      <input type="text" value={input} readOnly className="calculator-input" />
-      <div className="buttons">
-        <button onClick={clearInput}>C</button>
-        <button onClick={() => handleClick('/')}>/</button>
-        <button onClick={() => handleClick('*')}>*</button>
-        <button onClick={() => handleClick('.')}>.</button>
-        <button onClick={() => handleClick('7')}>7</button>
-        <button onClick={() => handleClick('8')}>8</button>
-        <button onClick={() => handleClick('9')}>9</button>
-        
-        
-        <button onClick={() => handleClick('-')}>-</button>
-        <button onClick={() => handleClick('4')}>4</button>
-        <button onClick={() => handleClick('5')}>5</button>
-        <button onClick={() => handleClick('6')}>6</button>
-        
-
-        <button onClick={() => handleClick('1')}>1</button>
-        <button onClick={() => handleClick('2')}>2</button>
-        <button onClick={() => handleClick('3')}>3</button>
-        
-
-        <button onClick={() => handleClick('0')}>0</button>
-        
-        <button onClick={calculate}>=</button>
-        <button onClick={() => handleClick('+')}>+</button>
+    <div className='calculator-container'>
+      <div className='calculator-display'>
+        <div className='display-input'>{dispalyInput}</div>
+      </div>
+      <div className='calculator-buttons'>
+        <div className='grid-container'>
+          {CALC_BUTTON_LIST.map((item, index) => {
+            const buttonClass =
+              item === "AC" || item === "="
+                ? "button-ac-equals"
+                : item === "DEL"
+                  ? "button-del"
+                  : "button-default";
+            return (
+              <button
+                key={index}
+                onClick={() => handleButtonClick(item.toString())}
+                className={`button ${buttonClass}`}
+              >
+                {item}
+              </button>
+            )
+          })}
+        </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 export default Calculator;

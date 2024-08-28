@@ -1,26 +1,27 @@
 // import React from 'react';
-// import Calculator from './Calculator';
-// import './styles.css'; // Import your styles here
+// import './index.css';
+// import RandomAyat from './RandomAyat';
 
-// function App() {
+// export const App = () => {
 //   return (
-//     <div className="App">
-//       <h2>Simple Calculator</h2>
-//       <Calculator />
+//     <div>
+//       <RandomAyat />
 //     </div>
 //   );
-// }
-
-// export default App;
+// };
 
 import React from 'react';
-import './index.css';
-import RandomAyat from './RandomAyat';
+import Calculator from './Calculator';
+import './App.css';
 
-export const App = () => {
+function App() {
   return (
-    <div>
-      <RandomAyat />
+    <div className='app-container'>
+      <div className='app-content'>
+        <Calculator />
+      </div>
     </div>
   );
-};
+}
+
+export default App;
