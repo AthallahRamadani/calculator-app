@@ -1,0 +1,74 @@
+/* src/styles.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    color: #333; /* Set text color to dark grey */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  h2 {
+    color: #333; /* Ensure the heading text is visible */
+  }
+  
+  .calculator {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 250px;
+    text-align: center;
+  }
+  
+  input {
+    width: 100%;
+    height: 40px;
+    font-size: 24px;
+    text-align: right;
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    color: #333; /* Ensure the input text is visible */
+  }
+  
+  .buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  
+  button {
+    height: 50px;
+    font-size: 18px;
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    color: #333; /* Ensure button text is visible */
+  }
+  
+  button:hover {
+    background-color: #d0d0d0;
+  }
+  
+  button:active {
+    background-color: #ccc;
+  }
+  
+  /* Tambahkan aturan untuk tombol operator */
+  button:nth-child(4n),
+  button:nth-child(17) { /* Tombol operator dan '=' */
+    background-color: #ffa500;
+    color: white;
+  }
+  
+  button:nth-child(4n):hover,
+  button:nth-child(17):hover {
+    background-color: #ff8c00;
+  }
+  
